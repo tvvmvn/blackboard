@@ -23,7 +23,7 @@ export default function App() {
       <img
         className="fixed right-0 bottom-0 w-1/2"
         src="./cat.png"
-        alt=""
+        alt="sleeping_cat"
       />
     </div>
   );
