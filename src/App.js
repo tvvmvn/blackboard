@@ -1,15 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 
 /*
-  # Amazon Product details page
+  # Amazon product details page
 
-  1 Image Carousel
-  2 Options (localStorage)
-  3 AddToCart
-  4 Accordion product details
+  1 Product photos
+  Gallery
+
+  2 Options & AddToCart
+  localStorage
+
+  3 Product details
+  Accordion
+
   5 Reviews
+  List rendering
+
   6 Top button
+  scroll event
 */
+
+const product = {
+  name: "Galaxy S24",
+  color: ["Black", "Grey", "Purple"],
+  storage: [128, 256, 512]
+}
 
 export default function App() {
 
@@ -18,11 +32,11 @@ export default function App() {
     storage: "",
   });
 
-  const product = {
-    name: "Galaxy S24",
-    color: ["Black", "Grey", "Purple"],
-    storage: [128, 256, 512]
-  }
+  const [acc, setAcc] = useState({
+    features: false,
+    details: false,
+    measurements: false
+  })
 
   function handleChange(e) {
     const name = e.target.name;
@@ -35,6 +49,10 @@ export default function App() {
     console.log(cart);
   }
 
+  function toTop() {
+    window.document.documentElement.scrollTop = 0;
+  }
+
   return (
     <>
       <h1>Amazon</h1>
@@ -45,7 +63,7 @@ export default function App() {
       <p>{product.name}</p>
 
       <h3>Images</h3>
-      <p>...Carousel</p>
+      <p>Gallery</p>
 
       <h3>Colors</h3>
       <ul>
@@ -96,11 +114,34 @@ export default function App() {
 
       <h3>Product information (Accordion)</h3>
 
-      <ul>
-        <li>Features & Specs</li>
-        <li>Item details</li>
-        <li>Measurements</li>
-      </ul>
+      <div className="">
+        <section>
+          <button 
+            onClick={() => setAcc({ ...acc, features: !acc.features})}
+            >
+              Feature & Specs
+            </button>
+          <div 
+            className="hidden"
+            style={{ display: acc.features && "block" }}
+          >
+            features...
+          </div>
+        </section>
+        <section>
+          <button 
+            onClick={() => setAcc({ ...acc, details: !acc.details})}
+            >
+              Item Details
+            </button>
+          <div 
+            className="hidden"
+            style={{ display: acc.details && "block" }}
+          >
+            details...
+          </div>
+        </section>
+      </div>
 
       <hr />
 
@@ -111,7 +152,7 @@ export default function App() {
         <li>..</li>
       </ul>
 
-      <button>Bring me TOP</button>
+      <button onClick={toTop}>Bring me TOP</button>
     </>  
   )
 }
