@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import Accordion from "./components/Accordion";
+import Gallery from "./components/Gallery";
 
 /*
   # Amazon DATA details page
@@ -21,13 +23,11 @@ import { useState, useEffect, useRef } from "react";
 
 const DATA = {
   productId: "g0",
-  name: "Galaxy S24 512GB Onyx Black",
-  photos: ["Simba.webp", "Timon.webp", "Pumbaa.webp"],
-  price: 999,
-  catalog: `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-  Facere ad odit assumenda quia perspiciatis corporis eaque itaque nulla eligendi, 
-  debitis animi, magni fuga! Voluptas amet doloribus, 
-  sapiente nihil rerum tempora?`,
+  name: "Galaxy S24 512GB Amber Yellow",
+  manufacturer: "SAMSUNG",
+  photos: ["product-1.jpeg", "product-2.jpeg", "product-3.jpeg"],
+  price: 799,
+  catalog: "catalog.png",
   info: {
     features: {
       OS: "Android 14",
@@ -47,27 +47,22 @@ const DATA = {
 }
 
 export default function App() {
-
   const [added, addToCart] = useState(localStorage.getItem("cart"));  
   const [active, setActive] = useState(false);
-  const [acc, setAcc] = useState({
-    features: false,
-    details: false,
-    measurements: false
-  })
+
+  function handleClick() {
+    alert("Added");
+    localStorage.setItem("cart", DATA.productId);
+    addToCart(DATA.productId);
+  }
 
   function toTop() {
     window.document.documentElement.scrollTop = 0;
   }
 
-  // synchronize localStorage
   useEffect(() => {
-    if (added) {
-      localStorage.setItem("cart", DATA.productId);
-    }
-  }, [added])
+    document.title = "Amazon";
 
-  useEffect(() => {
     document.addEventListener("scroll", () => {
       const scrollTop = document.documentElement.scrollTop;
       
@@ -79,29 +74,36 @@ export default function App() {
         setActive(false);
       }
     })
-  }, [])
+  }, []);
 
   return (
     <div id="app">
       <header className="border-b fixed top-0 left-0 z-10 w-full bg-white">
         <div className="flex justify-center items-center h-12">
-          <h1 className="text-xl">Amazon</h1>
+          <img 
+            className="h-6"
+            src={process.env.PUBLIC_URL + "/images/logo.png"} 
+            alt="logo" 
+          />
         </div>
       </header>
 
       <main className="mt-16 max-w-sm mx-auto">
-        <h3 className="my-4 font-semibold">{DATA.name}</h3>
+        <small className="text-xs text-blue-400 font-semibold">
+          {DATA.manufacturer}
+        </small>
+        <h3 className="mb-4 text-gray-800">{DATA.name}</h3>
 
-        <Gallery />
+        <Gallery photos={DATA.photos} />
 
-        <div className="text-4xl font-semibold my-4">
+        <div className="text-4xl font-semibold my-8">
           ${DATA.price}
         </div>
 
         <button 
           type="button" 
-          className="w-full p-2 bg-yellow-400 rounded-full disabled:opacity-50"
-          onClick={() => addToCart(DATA.productId)}
+          className="w-full p-3 bg-yellow-400 rounded-full disabled:opacity-50"
+          onClick={handleClick}
           disabled={added}
         >
           Add To Cart
@@ -110,124 +112,27 @@ export default function App() {
         <h3 className="my-4 font-semibold">
           From the manufacturer
         </h3>
-        <h1 className="text-6xl text-gray-200">{DATA.catalog}</h1>
+        <img 
+          src={process.env.PUBLIC_URL + "/images/" + DATA.catalog} 
+          alt={DATA.catalog} 
+        />
 
-        <h3 className="my-4 font-semibold">
-          Product information
-        </h3>
+        <Accordion info={DATA.info} />
 
-        <ul className="">
-          <li className="mb-1">
-            <button
-              className="w-full p-2 bg-gray-200 text-left"
-              onClick={() => setAcc({ ...acc, features: !acc.features })}
-            >
-              Feature & Specs
-            </button>
-            <div
-              className="hidden"
-              style={{ display: acc.features && "block" }}
-            >
-              <p>OS: {DATA.info.features.OS}</p>
-              <p>Celluar Technology: {DATA.info.features.Celluar}</p>
-              <p>Connector Type: {DATA.info.features.Connector}</p>
-            </div>
-          </li>
-          <li className="mb-1">
-            <button
-              className="w-full p-2 bg-gray-200 text-left"
-              onClick={() => setAcc({ ...acc, details: !acc.details })}
-            >
-              Item Details
-            </button>
-            <div
-              className="hidden"
-              style={{ display: acc.details && "block" }}
-            >
-              <p>Customer Reviews: {DATA.info.details.reviews}</p>
-              <p>Brand: {DATA.info.details.brand}</p>
-              <p>Year: {DATA.info.details.year}</p>
-            </div>
-          </li>
-          <li className="mb-1">
-            <button
-              className="w-full p-2 bg-gray-200 text-left"
-              onClick={() => setAcc({ ...acc, measurements: !acc.measurements })}
-            >
-              Measurements
-            </button>
-            <div
-              className="hidden"
-              style={{ display: acc.measurements && "block" }}
-            >
-              <p>Weight: {DATA.info.measurements.weight} grams</p>
-              <p>Item Dimensions LxWxH: {DATA.info.measurements.dimension} inch</p>
-            </div>
-          </li>
-        </ul>
-
-        <button 
-          className="fixed right-4 bottom-4 bg-gray-200 p-2"
+        <svg 
+          className="fixed w-8 right-4 bottom-8 opacity-50"
           onClick={toTop}
           style={{ display: active ? "block" : "none" }}
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 512 512"
         >
-          TOP
-        </button>
+          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/>
+        </svg>
       </main>
-      <footer className="p-8 bg-gray-400 mt-12 text-center">
-        2024 Amazon
+
+      <footer className="mt-12 text-center p-8 bg-black text-white">
+        2024 &copy; Amazon
       </footer>
     </div>  
-  )
-}
-
-function Gallery() {
-  const [index, setIndex] = useState(0);
-
-  const prevBtn = (
-    <button 
-      className="absolute top-0 left-0 h-full px-2 text-4xl text-white"
-      onClick={() => setIndex(index - 1)}
-    >
-      &#10094;
-    </button>
-  )
-
-  const nextBtn = (
-    <button 
-      className="absolute top-0 right-0 h-full px-2 text-4xl text-white"
-      onClick={() => setIndex(index + 1)}
-    >
-      &#10095;
-    </button>  
-  )
-
-  return (
-    <>
-      <div className="mx-auto w-[300px] h-[300px] relative border">
-        <img 
-          className="block w-full h-full object-cover"
-          src={process.env.PUBLIC_URL + "/images/" + DATA.photos[index]} 
-          alt=""
-        />
-        {(index != 0) && prevBtn}
-        {(index != 2) && nextBtn}
-      </div>
-
-
-      <div className="flex justify-center">
-        {DATA.photos.map((photo, i) => (
-          <span
-            key={i}
-            className=""
-            style={{ 
-              color: index == i ? "red" : "black"
-            }}
-          >
-            *
-          </span>
-        ))}
-      </div>
-    </>  
   )
 }
