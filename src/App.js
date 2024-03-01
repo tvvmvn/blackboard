@@ -2,25 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import Accordion from "./components/Accordion";
 import Gallery from "./components/Gallery";
 
-/*
-  # Amazon DATA details page
-
-  1 Product photos
-  Gallery
-
-  2 Options & AddToCart
-  localStorage
-
-  3 Product details
-  Accordion
-
-  5 Reviews (-)
-  List rendering
-
-  6 Top button
-  scroll event
-*/
-
 const DATA = {
   productId: "g0",
   name: "Galaxy S24 512GB Amber Yellow",
@@ -30,9 +11,9 @@ const DATA = {
   catalog: "catalog.png",
   info: {
     features: {
-      OS: "Android 14",
-      Celluar: "5G Connector",
-      Connector: "USB Type C"
+      os: "Android 14",
+      cellular: "5G Connector",
+      connector: "USB Type C"
     },
     details: {
       reviews: "3.9 out of 5",

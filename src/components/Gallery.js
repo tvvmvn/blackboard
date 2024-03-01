@@ -42,7 +42,7 @@ export default function Gallery({ photos }) {
             key={i}
             className="w-2 h-2 mx-1 rounded-full bg-gray-200"
             style={{ 
-              backgroundColor: (index == i) && "black"
+              backgroundColor: (index == i) && "orange"
             }}
           >
           </span>
