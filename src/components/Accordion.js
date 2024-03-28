@@ -1,28 +1,15 @@
 import { useState } from "react";
 
-const DATA = {
-  features: {
-    os: "Android 14",
-    celluar: "5G Connector",
-    connector: "USB Type C"
-  },
-  details: {
-    review: 3.9,
-    brand: "SAMSUNG",
-    year: 2024,
-  },
-  measurements: {
-    weight: 197,
-    dimension: "6.24 x 2.99 x 0.3",
-  }
-};
-
-const keys = Object.keys(DATA);
+const DATA = [
+  { id: "a0", name: "Features", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi exercitationem dolor, laboriosam alias magni maiores repellendus aut temporibus!" },
+  { id: "a1", name: "Details", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi exercitationem dolor, laboriosam alias magni maiores repellendus aut temporibus!" },
+  { id: "a2", name: "Measurements", content: "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
+]
 
 export default function Accordion() {
 
-  const accordions = keys.map(key => (
-    <Tab name={key} info={DATA[key]} />
+  const accordions = DATA.map(info => (
+    <Tab name={info.name} content={info.content} />
   ))
 
   return (
@@ -38,19 +25,8 @@ export default function Accordion() {
   )
 }
 
-function Tab({ name, info }) {
+function Tab({ name, content }) {
   const [active, setActive] = useState(false);
-
-  const keys = Object.keys(info);
-
-  const dataList = keys.map(key => (
-    <>
-      <dt className="p-2 font-semibold">{key}</dt>
-      <dd className="p-2">
-        {info[key]}
-      </dd>
-    </>
-  ))
 
   return (
     <li className="mb-1">
@@ -61,12 +37,14 @@ function Tab({ name, info }) {
         <p>{name}</p>
         <span>{active ? "-" : "+"}</span>
       </button>
-      <dl
-        className="grid grid-cols-2 overflow-hidden transition-all"
+      <div
+        className="overflow-hidden transition-all"
         style={{ maxHeight: active ? "200px" : "0px" }}
       >
-        {dataList}
-      </dl>
+        <p className="p-2">
+          {content}
+        </p>
+      </div>
     </li>  
   )
 }
