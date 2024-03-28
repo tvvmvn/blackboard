@@ -6,25 +6,8 @@ const DATA = {
   productId: "g0",
   name: "Galaxy S24 512GB Amber Yellow",
   manufacturer: "SAMSUNG",
-  photos: ["product-1.jpeg", "product-2.jpeg", "product-3.jpeg"],
   price: 799,
-  catalog: "catalog.png",
-  info: {
-    features: {
-      os: "Android 14",
-      cellular: "5G Connector",
-      connector: "USB Type C"
-    },
-    details: {
-      reviews: "3.9 out of 5",
-      brand: "SAMSUNG",
-      year: 2024
-    },
-    measurements: {
-      weight: 197,
-      dimension: "6.24 x 2.99 x 0.3"
-    }
-  }
+  catalog: "catalog.png"
 }
 
 export default function App() {
@@ -69,13 +52,13 @@ export default function App() {
         </div>
       </header>
 
-      <main className="mt-16 max-w-sm mx-auto">
+      <main className="mt-16 max-w-md mx-auto px-4 pb-8">
         <small className="text-xs text-blue-400 font-semibold">
           {DATA.manufacturer}
         </small>
         <h3 className="mb-4 text-gray-800">{DATA.name}</h3>
 
-        <Gallery photos={DATA.photos} />
+        <Gallery />
 
         <div className="text-4xl font-semibold my-8">
           ${DATA.price}
@@ -83,14 +66,14 @@ export default function App() {
 
         <button 
           type="button" 
-          className="w-full p-3 bg-yellow-400 rounded-full disabled:opacity-50"
+          className="w-full p-3 bg-yellow-400 font-semibold rounded-full disabled:opacity-50"
           onClick={handleClick}
           disabled={added}
         >
           Add To Cart
         </button>
 
-        <h3 className="my-4 font-semibold">
+        <h3 className="my-4 text-lg">
           From the manufacturer
         </h3>
         <img 
@@ -98,7 +81,7 @@ export default function App() {
           alt={DATA.catalog} 
         />
 
-        <Accordion info={DATA.info} />
+        <Accordion />
 
         <svg 
           className="fixed w-8 right-4 bottom-8 opacity-50"
@@ -110,10 +93,6 @@ export default function App() {
           <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM377 271c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-87-87-87 87c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9L239 167c9.4-9.4 24.6-9.4 33.9 0L377 271z"/>
         </svg>
       </main>
-
-      <footer className="mt-12 text-center p-8 bg-black text-white">
-        2024 &copy; Amazon
-      </footer>
     </div>  
   )
 }

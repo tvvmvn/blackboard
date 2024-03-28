@@ -1,35 +1,28 @@
 import { useState } from "react";
 
-export default function Accordion({ info }) {
+const DATA = {
+  features: {
+    os: "Android 14",
+    celluar: "5G Connector",
+    connector: "USB Type C"
+  },
+  details: {
+    review: 3.9,
+    brand: "SAMSUNG",
+    year: 2024,
+  },
+  measurements: {
+    weight: 197,
+    dimension: "6.24 x 2.99 x 0.3",
+  }
+};
 
-  const list = [
-    {
-      name: "Feature & Specs",
-      dl: [
-        { dt: "OS", dd: info.features.os },
-        { dt: "Cellular Technology", dd: info.features.cellular },
-        { dt: "Connector", dd: info.features.connector },
-      ]
-    },
-    {
-      name: "Item Details",
-      dl: [
-        { dt: "Customer Reviews", dd: info.details.reviews },
-        { dt: "Brand", dd: info.details.brand },
-        { dt: "Year", dd: info.details.year },
-      ]
-    },
-    {
-      name: "Measurements",
-      dl: [
-        { dt: "Weight", dd: info.measurements.weight },
-        { dt: "Item Dimension", dd: info.measurements.dimension },
-      ]
-    },
-  ]
+const keys = Object.keys(DATA);
 
-  const l = list.map(item => (
-    <Tab name={item.name} dl={item.dl} />
+export default function Accordion() {
+
+  const accordions = keys.map(key => (
+    <Tab name={key} info={DATA[key]} />
   ))
 
   return (
@@ -39,19 +32,23 @@ export default function Accordion({ info }) {
       </h3>
 
       <ul className="">
-        {l}
+        {accordions}
       </ul>  
     </>
   )
 }
 
-function Tab({ name, dl }) {
+function Tab({ name, info }) {
   const [active, setActive] = useState(false);
 
-  const data = dl.map(item => (
+  const keys = Object.keys(info);
+
+  const dataList = keys.map(key => (
     <>
-      <dt className="font-semibold p-2">{item.dt}</dt>
-      <dd className="p-2">{item.dd}</dd>
+      <dt className="p-2 font-semibold">{key}</dt>
+      <dd className="p-2">
+        {info[key]}
+      </dd>
     </>
   ))
 
@@ -68,8 +65,8 @@ function Tab({ name, dl }) {
         className="grid grid-cols-2 overflow-hidden transition-all"
         style={{ maxHeight: active ? "200px" : "0px" }}
       >
-        {data}
+        {dataList}
       </dl>
-    </li>
+    </li>  
   )
 }
