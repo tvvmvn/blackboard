@@ -73,7 +73,7 @@ export default function App() {
           Add To Cart
         </button>
 
-        <h3 className="my-4 text-lg">
+        <h3 className="my-4 font-semibold">
           From the manufacturer
         </h3>
         <img 
