@@ -18,7 +18,7 @@ export default function Accordion() {
         Product information
       </h3>
 
-      <ul className="">
+      <ul>
         {accordions}
       </ul>  
     </>
@@ -30,6 +30,7 @@ function Tab({ name, content }) {
 
   return (
     <li className="mb-1">
+      {/* Button */}
       <button
         className="w-full px-4 py-2 bg-gray-100 flex justify-between"
         onClick={() => setActive(!active)}
@@ -37,6 +38,8 @@ function Tab({ name, content }) {
         <p>{name}</p>
         <span>{active ? "-" : "+"}</span>
       </button>
+      
+      {/* Contents */}
       <div
         className="overflow-hidden transition-all"
         style={{ maxHeight: active ? "200px" : "0px" }}

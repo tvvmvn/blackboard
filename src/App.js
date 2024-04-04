@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Accordion from "./components/Accordion";
 import Gallery from "./components/Gallery";
 
-const DATA = {
+const PRODUCT = {
   productId: "g0",
   name: "Galaxy S24 512GB Amber Yellow",
   manufacturer: "SAMSUNG",
@@ -11,13 +11,13 @@ const DATA = {
 }
 
 export default function App() {
-  const [added, addToCart] = useState(localStorage.getItem("cart"));  
+  const [added, setAdded] = useState(localStorage.getItem("cart"));  
   const [active, setActive] = useState(false);
 
-  function handleClick() {
+  function addToCart() {
     alert("Added");
-    localStorage.setItem("cart", DATA.productId);
-    addToCart(DATA.productId);
+    localStorage.setItem("cart", PRODUCT.productId);
+    setAdded(PRODUCT.productId);
   }
 
   function toTop() {
@@ -25,7 +25,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    document.title = "Amazon";
+    document.title = `Amazon - ${PRODUCT.name}`;
 
     document.addEventListener("scroll", () => {
       const scrollTop = document.documentElement.scrollTop;
@@ -42,6 +42,7 @@ export default function App() {
 
   return (
     <div id="app">
+      {/* Header */}
       <header className="border-b fixed top-0 left-0 z-10 w-full bg-white">
         <div className="flex justify-center items-center h-12">
           <img 
@@ -53,36 +54,42 @@ export default function App() {
       </header>
 
       <main className="mt-16 max-w-md mx-auto px-4 pb-8">
+        {/* Product name */}
         <small className="text-xs text-blue-400 font-semibold">
-          {DATA.manufacturer}
+          {PRODUCT.manufacturer}
         </small>
-        <h3 className="mb-4 text-gray-800">{DATA.name}</h3>
+        <h3 className="mb-4 text-gray-800">{PRODUCT.name}</h3>
 
+        {/* Product photos */}
         <Gallery />
 
         <div className="text-4xl font-semibold my-8">
-          ${DATA.price}
+          ${PRODUCT.price}
         </div>
 
+        {/* AddToCart button */}
         <button 
           type="button" 
           className="w-full p-3 bg-yellow-400 font-semibold rounded-full disabled:opacity-50"
-          onClick={handleClick}
+          onClick={addToCart}
           disabled={added}
         >
           Add To Cart
         </button>
 
+        {/* Product catalog */}
         <h3 className="my-4 font-semibold">
           From the manufacturer
         </h3>
         <img 
-          src={process.env.PUBLIC_URL + "/images/" + DATA.catalog} 
-          alt={DATA.catalog} 
+          src={process.env.PUBLIC_URL + "/images/" + PRODUCT.catalog} 
+          alt={PRODUCT.catalog} 
         />
 
+        {/* Accordion */}
         <Accordion />
 
+        {/* Top button */}
         <svg 
           className="fixed w-8 right-4 bottom-8 opacity-50"
           onClick={toTop}
